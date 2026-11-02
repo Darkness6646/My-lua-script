@@ -1,5 +1,5 @@
 -- ====================================================================
--- CATEGORY HUB REPAIR: PART 1 (FIRST HALF) - INTERFACE FOUNDATION
+-- CATEGORY HUB FINAL FIX: PART 1 (FIRST HALF) - INTERFACE LAYOUT
 -- ====================================================================
 
 local CoreGui = game:GetService("CoreGui")
@@ -7,7 +7,7 @@ local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- 1. CENTRAL SANITIZATION (Safely wipes previous instances to remove lag)
+-- 1. CENTRAL SYSTEM CLEANUP (Wipes previous frames to eliminate ghost elements)
 if _G.Framework_Active_Signals then
     for _, disconnect in pairs(_G.Framework_Active_Signals) do pcall(disconnect) end
 end
@@ -15,7 +15,7 @@ if CoreGui:FindFirstChild("UniversalCategoryHub") then
     CoreGui.UniversalCategoryHub:Destroy()
 end
 
--- 2. SYSTEM STATE CONFIGURATION MATRIX
+-- 2. CORE STORAGE PROPERTY MATRIX
 _G.Framework_Active_Signals = {}
 _G.SettingsMatrix = {
     MasterESP = true,
@@ -29,13 +29,13 @@ _G.SettingsMatrix = {
 
 _G.Framework_Core_Update_ESP = function() end
 
--- 3. CANVAS LAYER GENERATION
+-- 3. GRAPHIC CANVAS GENERATOR
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "UniversalCategoryHub"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = CoreGui
 
--- 4. THE MINIMIZE LAUNCHER WIDGET
+-- 4. FLOATING LAUNCHER CIRCLE WIDGET (Launcher Orb)
 local FloatIcon = Instance.new("TextButton")
 FloatIcon.Name = "FloatIcon"
 FloatIcon.Size = UDim2.new(0, 46, 0, 46)
@@ -57,7 +57,7 @@ IconStroke.Color = Color3.fromRGB(115, 60, 255)
 IconStroke.Thickness = 2
 IconStroke.Parent = FloatIcon
 
--- 5. MAIN HUB INTERFACE WINDOW (Redz Hub Style Bounds)
+-- 5. THE MAIN PANEL BASE FRAME
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0, 460, 0, 320)
@@ -65,18 +65,18 @@ MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
-MainFrame.ClipsDescendants = true
 MainFrame.Parent = ScreenGui
 
 local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 8)
 MainCorner.Parent = MainFrame
 
--- Premium Header Panel
+-- Top Panel Title Panel Bar
 local HeaderFrame = Instance.new("Frame")
 HeaderFrame.Size = UDim2.new(1, 0, 0, 40)
 HeaderFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
 HeaderFrame.BorderSizePixel = 0
+HeaderFrame.ZIndex = 5 -- Forces title bar to float on top layers cleanly
 HeaderFrame.Parent = MainFrame
 
 local HeaderCorner = Instance.new("UICorner")
@@ -92,6 +92,7 @@ Title.TextColor3 = Color3.fromRGB(240, 240, 245)
 Title.TextSize = 13
 Title.Font = Enum.Font.SourceSansBold
 Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 6
 Title.Parent = HeaderFrame
 
 local CloseBtn = Instance.new("TextButton")
@@ -104,6 +105,7 @@ CloseBtn.TextSize = 12
 CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
 CloseBtn.Font = Enum.Font.SourceSansBold
 CloseBtn.BorderSizePixel = 0
+CloseBtn.ZIndex = 6
 CloseBtn.Parent = HeaderFrame
 Instance.new("UICorner").CornerRadius = UDim.new(0, 4)
 
@@ -117,12 +119,13 @@ FloatIcon.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
 end)
 
-print("[System Hub]: Part 1 Base Framework Repaired.")
+print("[System Hub]: Part 1 (First Half) Base Layout Assembled.")
+
 -- ====================================================================
--- CATEGORY HUB REPAIR: PART 1 (FINAL HALF) - SIDEBAR NAV BUTTONS
+-- CATEGORY HUB FINAL FIX: PART 1 (FINAL HALF) - ANCHORED SIDEBAR NAV
 -- ====================================================================
 
--- 6. DRAGGING EVENT REGISTRY
+-- 6. MULTI-INSTANCE VECTOR DRAGGING ENGINE
 local function enableDragging(frame, dragHandle)
     local handle = dragHandle or frame
     local dragging, dragInput, dragStart, startPos
@@ -147,24 +150,27 @@ end
 enableDragging(MainFrame, HeaderFrame)
 enableDragging(FloatIcon)
 
--- 7. VISUAL SIDEBAR FRAME (The Left Panel Space)
+-- 7. LEFT SIDEBAR PANEL FRAME (The Targeted Left Space Placement)
 local SidebarFrame = Instance.new("Frame")
 SidebarFrame.Name = "SidebarFrame"
 SidebarFrame.Size = UDim2.new(0, 130, 1, -40)
 SidebarFrame.Position = UDim2.new(0, 0, 0, 40)
 SidebarFrame.BackgroundColor3 = Color3.fromRGB(23, 23, 28)
 SidebarFrame.BorderSizePixel = 0
+SidebarFrame.ZIndex = 2 -- Forces sidebar space above the core panel background
 SidebarFrame.Parent = MainFrame
 
 local SideCorner = Instance.new("UICorner")
 SideCorner.CornerRadius = UDim.new(0, 8)
 SideCorner.Parent = SidebarFrame
 
+-- Seamless corner patch for the navigation frame divider
 local HideStrip = Instance.new("Frame")
 HideStrip.Size = UDim2.new(0, 10, 1, 0)
 HideStrip.Position = UDim2.new(1, -10, 0, 0)
 HideStrip.BackgroundColor3 = Color3.fromRGB(23, 23, 28)
 HideStrip.BorderSizePixel = 0
+HideStrip.ZIndex = 3
 HideStrip.Parent = SidebarFrame
 
 local TabListLayout = Instance.new("UIListLayout")
@@ -173,15 +179,16 @@ TabListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 TabListLayout.Parent = SidebarFrame
 
 local ListPadding = Instance.new("UIPadding")
-ListPadding.PaddingTop = UDim.new(0, 8)
+ListPadding.PaddingTop = UDim.new(0, 10)
 ListPadding.Parent = SidebarFrame
 
--- 8. RIGHT CONTENT CONTAINERS
+-- 8. VIEWPORT CONTENT FRAMES (Right-Hand Content Windows)
 local ContentContainer = Instance.new("Frame")
 ContentContainer.Name = "ContentContainer"
-ContentContainer.Size = UDim2.new(1, -140, 1, -50)
+ContentContainer.Size = UDim2.new(1, -145, 1, -50)
 ContentContainer.Position = UDim2.new(0, 140, 0, 45)
 ContentContainer.BackgroundTransparency = 1
+ContentContainer.ZIndex = 2
 ContentContainer.Parent = MainFrame
 
 _G.CombatPage = Instance.new("Frame")
@@ -189,6 +196,7 @@ _G.CombatPage.Name = "CombatPage"
 _G.CombatPage.Size = UDim2.new(1, 0, 1, 0)
 _G.CombatPage.BackgroundTransparency = 1
 _G.CombatPage.Visible = true
+_G.CombatPage.ZIndex = 3
 _G.CombatPage.Parent = ContentContainer
 
 _G.VisualsPage = Instance.new("Frame")
@@ -196,6 +204,7 @@ _G.VisualsPage.Name = "VisualsPage"
 _G.VisualsPage.Size = UDim2.new(1, 0, 1, 0)
 _G.VisualsPage.BackgroundTransparency = 1
 _G.VisualsPage.Visible = false
+_G.VisualsPage.ZIndex = 3
 _G.VisualsPage.Parent = ContentContainer
 
 _G.MiscPage = Instance.new("Frame")
@@ -203,6 +212,7 @@ _G.MiscPage.Name = "MiscPage"
 _G.MiscPage.Size = UDim2.new(1, 0, 1, 0)
 _G.MiscPage.BackgroundTransparency = 1
 _G.MiscPage.Visible = false
+_G.MiscPage.ZIndex = 3
 _G.MiscPage.Parent = ContentContainer
 
 local function switchTab(activePage)
@@ -211,17 +221,18 @@ local function switchTab(activePage)
     _G.MiscPage.Visible = (activePage == _G.MiscPage)
 end
 
--- NAVIGATION TAB CONSTRUCTOR (Secured parenting strictly inside SidebarFrame)
+-- ANCHORED TAB BUTTON DESIGNER
 local function createTabButton(text, pageTarget)
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(0, 115, 0, 32)
-    btn.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
+    btn.BackgroundColor3 = Color3.fromRGB(32, 32, 42)
     btn.Text = text
-    btn.TextColor3 = Color3.fromRGB(210, 210, 215)
+    btn.TextColor3 = Color3.fromRGB(230, 230, 235)
     btn.TextSize = 11
     btn.Font = Enum.Font.SourceSansBold
     btn.BorderSizePixel = 0
-    btn.Parent = SidebarFrame -- Direct secure sidebar mount
+    btn.ZIndex = 4 -- Elevated to sit securely inside the sidebar column layer
+    btn.Parent = SidebarFrame
     
     local c = Instance.new("UICorner")
     c.CornerRadius = UDim.new(0, 5)
@@ -231,11 +242,12 @@ local function createTabButton(text, pageTarget)
     return btn
 end
 
+-- Generate Layout Buttons in the Left Section Panel
 createTabButton("🎯 Combat Engine", _G.CombatPage)
 createTabButton("👁️ Visuals ESP", _G.VisualsPage)
 createTabButton("⚙️ Movement / Misc", _G.MiscPage)
 
-print("[System Hub]: Left sidebar category buttons anchored successfully.");
+print("[System Hub]: Part 1 Visual Alignment Finalized Successfully.");
 -- ====================================================================
 -- CATEGORY HUB REPAIR: PART 2 (FIRST HALF) - PARAMETER SLOTS
 -- ====================================================================
@@ -255,6 +267,7 @@ local function makeToggle(text, parent, callback)
     btn.Font = Enum.Font.SourceSansBold
     btn.TextXAlignment = Enum.TextXAlignment.Left
     btn.BorderSizePixel = 0
+    btn.ZIndex = 4
     btn.Parent = parent
     Instance.new("UICorner").CornerRadius = UDim.new(0, 5)
     
@@ -263,6 +276,7 @@ local function makeToggle(text, parent, callback)
     statusIndicator.Position = UDim2.new(1, -22, 0, 10)
     statusIndicator.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
     statusIndicator.BorderSizePixel = 0
+    statusIndicator.ZIndex = 5
     statusIndicator.Parent = btn
     Instance.new("UICorner").CornerRadius = UDim.new(1, 0)
 
@@ -281,6 +295,7 @@ local function makeInputSlot(text, parent, callback)
     box.TextSize = 11
     box.Font = Enum.Font.SourceSans
     box.BorderSizePixel = 0
+    box.ZIndex = 4
     box.Parent = parent
     Instance.new("UICorner").CornerRadius = UDim.new(0, 5)
     
@@ -297,6 +312,7 @@ local function makeUtilityMiniButton(text, parent, callback)
     b.TextSize = 11
     b.Font = Enum.Font.SourceSansBold
     b.BorderSizePixel = 0
+    b.ZIndex = 4
     b.Parent = parent
     Instance.new("UICorner").CornerRadius = UDim.new(0, 5)
     b.MouseButton1Click:Connect(callback)
@@ -334,6 +350,7 @@ SelectorBox.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
 SelectorBox.BorderSizePixel = 0
 SelectorBox.CanvasSize = UDim2.new(0, 0, 0, 0)
 SelectorBox.ScrollBarThickness = 4
+SelectorBox.ZIndex = 4
 SelectorBox.Parent = _G.CombatPage
 Instance.new("UICorner").CornerRadius = UDim.new(0, 5)
 
@@ -349,6 +366,7 @@ TargetStatusDisplay.Text = "Selected Targeted Tracker: ALL"
 TargetStatusDisplay.TextColor3 = Color3.fromRGB(0, 255, 150)
 TargetStatusDisplay.TextSize = 11
 TargetStatusDisplay.Font = Enum.Font.SourceSansBold
+TargetStatusDisplay.ZIndex = 4
 TargetStatusDisplay.Parent = _G.CombatPage
 
 local function updatePlayerDropdown()
@@ -363,6 +381,7 @@ local function updatePlayerDropdown()
     allBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
     allBtn.TextSize = 10
     allBtn.Font = Enum.Font.SourceSansBold
+    allBtn.ZIndex = 5
     allBtn.Parent = SelectorBox
     Instance.new("UICorner").CornerRadius = UDim.new(0, 4)
     
@@ -380,6 +399,7 @@ local function updatePlayerDropdown()
             pBtn.TextColor3 = Color3.fromRGB(220, 220, 225)
             pBtn.TextSize = 10
             pBtn.Font = Enum.Font.SourceSans
+            pBtn.ZIndex = 5
             pBtn.Parent = SelectorBox
             Instance.new("UICorner").CornerRadius = UDim.new(0, 4)
 
@@ -398,7 +418,7 @@ end)
 
 updatePlayerDropdown()
 
-print("[System Hub]: Part 2 (First Half) Interface Elements Restructured.");
+print("[System Hub]: Part 2 (First Half) Components Ready.");
 -- ====================================================================
 -- CATEGORY HUB REPAIR: PART 2 (FINAL OF PART 2) - SYSTEM REPLICATORS
 -- ====================================================================
@@ -587,10 +607,6 @@ table.insert(_G.Framework_Active_Signals, function()
 end)
 
 print("[System Hub]: Part 2 Core Engine Responsive Repairs Finalized.");
-
-
-
-
 
 
 
