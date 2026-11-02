@@ -1,5 +1,5 @@
 -- ====================================================================
--- CATEGORY HUB: PART 1 (FIRST HALF) - INTERFACE & LAUNCHER ICON
+-- CATEGORY HUB FIXED: PART 1 (FIRST HALF) - INTERFACE LAYER
 -- ====================================================================
 
 local CoreGui = game:GetService("CoreGui")
@@ -7,7 +7,7 @@ local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- 1. CENTRAL GARBAGE DISPOSAL ENGINE (Halts past threads to eliminate lag)
+-- 1. CENTRAL CLEANUP SYSTEM (Prevents lag or duplicate thread stalls)
 if _G.Framework_Active_Signals then
     for _, disconnect in pairs(_G.Framework_Active_Signals) do pcall(disconnect) end
 end
@@ -15,7 +15,7 @@ if CoreGui:FindFirstChild("UniversalCategoryHub") then
     CoreGui.UniversalCategoryHub:Destroy()
 end
 
--- 2. MASTER PROPERTY MATRIX (Preserved System Parameters Matrix)
+-- 2. MASTER GLOBAL STORAGE MATRIX
 _G.Framework_Active_Signals = {}
 _G.SettingsMatrix = {
     MasterESP = true,
@@ -35,7 +35,7 @@ ScreenGui.Name = "UniversalCategoryHub"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = CoreGui
 
--- 4. THE LAUNCHER WIDGET (Draggable Floating Launcher Circle)
+-- 4. FLOATING LAUNCHER WIDGET BUTTON
 local FloatIcon = Instance.new("TextButton")
 FloatIcon.Name = "FloatIcon"
 FloatIcon.Size = UDim2.new(0, 46, 0, 46)
@@ -57,7 +57,7 @@ IconStroke.Color = Color3.fromRGB(115, 60, 255)
 IconStroke.Thickness = 2
 IconStroke.Parent = FloatIcon
 
--- 5. THE MAIN PANEL COMPONENT
+-- 5. MAIN HUB PANEL (Perfectly Sized Bounds)
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0, 460, 0, 320)
@@ -65,13 +65,14 @@ MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
+MainFrame.ClipsDescendants = true -- Enforces absolute screen layout bounds
 MainFrame.Parent = ScreenGui
 
 local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 8)
 MainCorner.Parent = MainFrame
 
--- Premium Header Bar Layout Panel
+-- Top Panel Header Bar
 local HeaderFrame = Instance.new("Frame")
 HeaderFrame.Size = UDim2.new(1, 0, 0, 40)
 HeaderFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
@@ -93,7 +94,6 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = HeaderFrame
 
--- Premium [X] Minimize Button Layout
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Name = "CloseBtn"
 CloseBtn.Size = UDim2.new(0, 30, 0, 30)
@@ -107,7 +107,6 @@ CloseBtn.BorderSizePixel = 0
 CloseBtn.Parent = HeaderFrame
 Instance.new("UICorner").CornerRadius = UDim.new(0, 4)
 
--- Window State Controller Actions
 CloseBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
     FloatIcon.Visible = true
@@ -118,12 +117,12 @@ FloatIcon.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
 end)
 
-print("[System Hub]: Part 1 (First Half) Interface Elements Configured.")
+print("[System Hub]: Part 1 (First Half) Corrected successfully.")
 -- ====================================================================
--- CATEGORY HUB: PART 1 (FINAL OF PART 1) - NAV & TAB CONTAINERS
+-- CATEGORY HUB FIXED: PART 1 (FINAL HALF) - FIXED NAV & WINDOWS
 -- ====================================================================
 
--- 6. MULTI-INSTANCE VECTOR DRAGGING COMPONENT
+-- 6. MULTI-INSTANCE VECTOR DRAGGING ENGINE
 local function enableDragging(frame, dragHandle)
     local handle = dragHandle or frame
     local dragging, dragInput, dragStart, startPos
@@ -148,7 +147,7 @@ end
 enableDragging(MainFrame, HeaderFrame)
 enableDragging(FloatIcon)
 
--- 7. LEFT SIDE NAVIGATION MENU BAR
+-- 7. FIXED LEFT SIDE NAVIGATION MENU BAR SIDEBAR
 local SidebarFrame = Instance.new("Frame")
 SidebarFrame.Name = "SidebarFrame"
 SidebarFrame.Size = UDim2.new(0, 130, 1, -40)
@@ -161,6 +160,7 @@ local SideCorner = Instance.new("UICorner")
 SideCorner.CornerRadius = UDim.new(0, 8)
 SideCorner.Parent = SidebarFrame
 
+-- Prevents background panel clipping artifacts
 local HideStrip = Instance.new("Frame")
 HideStrip.Size = UDim2.new(0, 10, 1, 0)
 HideStrip.Position = UDim2.new(1, -10, 0, 0)
@@ -169,15 +169,20 @@ HideStrip.BorderSizePixel = 0
 HideStrip.Parent = SidebarFrame
 
 local TabListLayout = Instance.new("UIListLayout")
-TabListLayout.Padding = UDim.new(0, 5)
+TabListLayout.Padding = UDim.new(0, 6)
 TabListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 TabListLayout.Parent = SidebarFrame
 
--- 8. VIEWPORT PAGE STORAGE OVERLAYS
+-- Spacing padding buffer for structural layout buttons
+local ListPadding = Instance.new("UIPadding")
+ListPadding.PaddingTop = UDim.new(0, 8)
+ListPadding.Parent = SidebarFrame
+
+-- 8. RESPONSIVE MAIN VIEWPORT STORAGE OVERLAYS
 local ContentContainer = Instance.new("Frame")
 ContentContainer.Name = "ContentContainer"
-ContentContainer.Size = UDim2.new(1, -130, 1, -40)
-ContentContainer.Position = UDim2.new(0, 130, 0, 40)
+ContentContainer.Size = UDim2.new(1, -140, 1, -50)
+ContentContainer.Position = UDim2.new(0, 140, 0, 45)
 ContentContainer.BackgroundTransparency = 1
 ContentContainer.Parent = MainFrame
 
@@ -210,7 +215,7 @@ end
 
 local function createTabButton(text, pageTarget)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 115, 0, 30)
+    btn.Size = UDim2.new(0, 115, 0, 32)
     btn.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
     btn.Text = text
     btn.TextColor3 = Color3.fromRGB(200, 200, 205)
@@ -218,7 +223,11 @@ local function createTabButton(text, pageTarget)
     btn.Font = Enum.Font.SourceSansBold
     btn.BorderSizePixel = 0
     btn.Parent = SidebarFrame
-    Instance.new("UICorner").CornerRadius = UDim.new(0, 4)
+    
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 5)
+    c.Parent = btn
+    
     btn.MouseButton1Click:Connect(function() switchTab(pageTarget) end)
     return btn
 end
@@ -227,10 +236,9 @@ createTabButton("🎯 Combat Engine", _G.CombatPage)
 createTabButton("👁️ Visuals ESP", _G.VisualsPage)
 createTabButton("⚙️ Movement / Misc", _G.MiscPage)
 
-print("[System Hub]: Part 1 Layout Panels Locked Down.")
-
+print("[System Hub]: Part 1 Layout Fixed and Locked to Left Sidebar Frame.")
 -- ====================================================================
--- CATEGORY HUB: PART 2 (FIRST HALF) - INTERFACE OBJECT FACTORIES
+-- CATEGORY HUB FIXED: PART 2 (FIRST HALF) - PARAMETER SLOTS
 -- ====================================================================
 
 local RunService = game:GetService("RunService")
@@ -240,7 +248,7 @@ local RunService = game:GetService("RunService")
 ----------------------------------------------------------------
 local function makeToggle(text, parent, callback)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 300, 0, 32)
+    btn.Size = UDim2.new(1, -10, 0, 32) -- Responsive scaling to fit current content frames
     btn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
     btn.Text = "  " .. text
     btn.TextColor3 = Color3.fromRGB(240, 240, 245)
@@ -267,7 +275,7 @@ end
 
 local function makeInputSlot(text, parent, callback)
     local box = Instance.new("TextBox")
-    box.Size = UDim2.new(0, 300, 0, 30)
+    box.Size = UDim2.new(1, -10, 0, 30) -- Adjusted bounds for side padding alignment
     box.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
     box.Text = text
     box.TextColor3 = Color3.fromRGB(180, 180, 185)
@@ -283,7 +291,7 @@ end
 
 local function makeUtilityMiniButton(text, parent, callback)
     local b = Instance.new("TextButton")
-    b.Size = UDim2.new(0, 300, 0, 26)
+    b.Size = UDim2.new(1, -10, 0, 26)
     b.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
     b.Text = text
     b.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -305,7 +313,7 @@ targetListPadding.HorizontalAlignment = Enum.HorizontalAlignment.Center
 targetListPadding.Parent = _G.CombatPage
 
 local spacerCombat = Instance.new("Frame")
-spacerCombat.Size = UDim2.new(1, 0, 0, 5)
+spacerCombat.Size = UDim2.new(1, 0, 0, 2)
 spacerCombat.BackgroundTransparency = 1
 spacerCombat.Parent = _G.CombatPage
 
@@ -322,7 +330,7 @@ makeInputSlot("Hitbox Transparency Setting (0 - 100)", _G.CombatPage, function(b
 end)
 
 local SelectorBox = Instance.new("ScrollingFrame")
-SelectorBox.Size = UDim2.new(0, 300, 0, 100)
+SelectorBox.Size = UDim2.new(1, -10, 0, 90) -- Responsive height adjustment matching new space properties
 SelectorBox.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
 SelectorBox.BorderSizePixel = 0
 SelectorBox.CanvasSize = UDim2.new(0, 0, 0, 0)
@@ -336,7 +344,7 @@ SelectorLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 SelectorLayout.Parent = SelectorBox
 
 local TargetStatusDisplay = Instance.new("TextLabel")
-TargetStatusDisplay.Size = UDim2.new(0, 300, 0, 20)
+TargetStatusDisplay.Size = UDim2.new(1, -10, 0, 20)
 TargetStatusDisplay.BackgroundTransparency = 1
 TargetStatusDisplay.Text = "Selected Targeted Tracker: ALL"
 TargetStatusDisplay.TextColor3 = Color3.fromRGB(0, 255, 150)
@@ -350,7 +358,7 @@ local function updatePlayerDropdown()
     end
     
     local allBtn = Instance.new("TextButton")
-    allBtn.Size = UDim2.new(0, 285, 0, 22)
+    allBtn.Size = UDim2.new(1, -10, 0, 22)
     allBtn.BackgroundColor3 = Color3.fromRGB(45, 55, 70)
     allBtn.Text = "[ CHOOSE ALL PLAYERS ]"
     allBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -367,7 +375,7 @@ local function updatePlayerDropdown()
     for _, p in ipairs(Players:GetPlayers()) do
         if p ~= LocalPlayer then
             local pBtn = Instance.new("TextButton")
-            pBtn.Size = UDim2.new(0, 285, 0, 22)
+            pBtn.Size = UDim2.new(1, -10, 0, 22)
             pBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
             pBtn.Text = p.Name
             pBtn.TextColor3 = Color3.fromRGB(220, 220, 225)
@@ -391,10 +399,10 @@ end)
 
 updatePlayerDropdown()
 
-print("[System Hub]: Part 2 (First Half) Factories and Dropdown Deployed.")
+print("[System Hub]: Part 2 (First Half) Interface Elements Restructured.")
 
 -- ====================================================================
--- CATEGORY HUB: PART 2 (FINAL OF PART 2) - ENGINE PIPELINES
+-- CATEGORY HUB FIXED: PART 2 (FINAL OF PART 2) - SYSTEM REPLICATORS
 -- ====================================================================
 
 ----------------------------------------------------------------
@@ -406,7 +414,7 @@ visualsListPadding.HorizontalAlignment = Enum.HorizontalAlignment.Center
 visualsListPadding.Parent = _G.VisualsPage
 
 local spacerVisuals = Instance.new("Frame")
-spacerVisuals.Size = UDim2.new(1, 0, 0, 5)
+spacerVisuals.Size = UDim2.new(1, 0, 0, 2)
 spacerVisuals.BackgroundTransparency = 1
 spacerVisuals.Parent = _G.VisualsPage
 
@@ -426,7 +434,7 @@ miscListPadding.HorizontalAlignment = Enum.HorizontalAlignment.Center
 miscListPadding.Parent = _G.MiscPage
 
 local spacerMisc = Instance.new("Frame")
-spacerMisc.Size = UDim2.new(1, 0, 0, 5)
+spacerMisc.Size = UDim2.new(1, 0, 0, 2)
 spacerMisc.BackgroundTransparency = 1
 spacerMisc.Parent = _G.MiscPage
 
@@ -450,8 +458,8 @@ end)
 
 makeUtilityMiniButton("🛑 Completely Shutdown Script Systems", _G.MiscPage, function()
     for _, disconnect in pairs(_G.Framework_Active_Signals) do pcall(disconnect) end
-    local CoreGui = game:GetService("CoreGui")
-    if CoreGui:FindFirstChild("UniversalCategoryHub") then CoreGui.UniversalCategoryHub:Destroy() end
+    local clGui = game:GetService("CoreGui")
+    if clGui:FindFirstChild("UniversalCategoryHub") then clGui.UniversalCategoryHub:Destroy() end
     print("[Category Hub]: Framework safely purged.")
 end)
 
@@ -580,6 +588,7 @@ table.insert(_G.Framework_Active_Signals, function()
     heartbeatConnection:Disconnect()
 end)
 
-print("[System Hub]: Part 2 Complete Architecture Successfully Live.");
+print("[System Hub]: Part 2 Core Engine Responsive Repairs Finalized.");
+
 
 
